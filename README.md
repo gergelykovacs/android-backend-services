@@ -8,11 +8,25 @@ Description / Technical details
 
 ### Milestones
 
-The steps to reach a tested state.
+Here is a list about the goals to achieve.
 
-- [ ] Step 1
-- [ ] Step 2
-- [ ] Step 3
+- [ ] Create a stable AIDL-based Storage-Network communication library.
+
+- [ ] Introduce unit tests for existing functionalities.
+
+- [ ] Fixture and mock data handling option for DEBUG, TEST versions.
+
+- [ ] Improve security.
+
+- [ ] Improve functionality with a Android HaMeR framework as a choice in 
+service connection in order to support loosely coupled class hierarchy that 
+enables developers to implement more flexible and optimised solutions.
+
+- [ ] Include libraries for RESTful frameworks *(e.g., Retrofit)* to be able to 
+implement more coherent and clean solutions
+
+- [ ] Improve networking functionalities with Bluetooth, Wifi-Direct, NFC, ... 
+connection capabilities.
 
 ### Project Management
 
