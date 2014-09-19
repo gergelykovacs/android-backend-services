@@ -1,15 +1,28 @@
 ## Android Backend Services
 
-*Library Project*
+Introduction
 
 ### Description
 
+Description / Technical details
+
+### Milestones
+
+The steps to reach a tested state.
+
+- [ ] Step 1
+- [ ] Step 2
+- [ ] Step 3
+
+### Project Management
+
+Project integration and management with Maven and Gradle.
 
 ### Usage
 
 The *AndroidManifest.xml* should contain the followings.
 
-```
+```xml
 <service 
   android:name="com.backend.services.services.StorageService" 
   android:process=":worker_process"
