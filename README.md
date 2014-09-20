@@ -25,6 +25,8 @@ on business logic rather then writing boilerplate codes.
 Example application will be provided in order to see how to 
 use the *Framework*.
 
+*The project is built on the top of an event driven solution.*
+
 ### Remarks
 
 The current state contains only the basic idea.
@@ -42,7 +44,7 @@ even if we talk about persisting data in files or in database and so on.
 but if we re-think in case of at least two connected devices we may say 
 they form a network even if it contains only two devices.
 
-- **Event**s are intentions that may be triggered and dispatched.
+- **Events** are intentions that may be triggered and dispatched.
 
 - **Event Holder** is an object that can store the String value of an event 
 and it is a kind of *Service Data*. It aims to exchange event type between 
@@ -55,7 +57,7 @@ into the list of *Service Data* and dispatched if needed.
 - **Service Data** is what can be attached to events and passed between 
 Services even if it must be marshalled and de-marshalled if IPC is used.
 
-- **Util**s are components by which some sort of reusable functionality 
+- **Utils** are components by which some sort of reusable functionality 
 can be achieved.
 
 ### Milestones
@@ -156,7 +158,7 @@ public class ExampleActivity extends Activity {
 	
 	private IServiceConnection mStorageServiceConnection = new StorageServiceConnection();
   
-  private IServiceEventListener mExampleEventListener;
+    private IServiceEventListener mExampleEventListener;
 
     private UserModel mUser;
 	
@@ -179,7 +181,7 @@ public class ExampleActivity extends Activity {
     
     @Override
     public void onDestroy() {
-      mStorageServiceConnection.detachEventListener(mExampleEventListener);
+        mStorageServiceConnection.detachEventListener(mExampleEventListener);
     	disconnectService();
     	super.onDestroy();
     }
