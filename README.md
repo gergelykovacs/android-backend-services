@@ -1,32 +1,91 @@
 ## Android Backend Services
 
-Introduction
+It is necessary to decouple different functionalities, 
+responsibilities from each other in order to create a clean, 
+reusable implementation. And what it all 
+boils down if modification is needed in some parts a project that 
+must not have any effect on the others.
+
+Three parts are distinguished *(layering)*
+
+1. The User Interface capabilities that handles what user can do. 
+It must not kown anything about what goes in the background.
+
+2. The way as data is processed and stored.
+
+3. The way of communication as the device connects to one or more 
+other devices.
+
+This project aims to separate the last two responsibilities and 
+collect useful implementations and tools that can help to make 
+development more structured, reusable and testable. 
+It aims to be a Framework by which developers can focuse more 
+on business logic rather then writing boilerplate codes.
+
+Example application will be provided in order to see how to 
+use the *Framework*.
+
+### Remarks
+
+The current state contains only the basic idea.
 
 ### Description
 
-Description / Technical details
+... soon
+
+#### Terminologies
+
+- **Storage vs. Networking** services. The term *Storage* is chosen because 
+reusable data must be persisted and with other word that must be *stored* 
+even if we talk about persisting data in files or in database and so on. 
+*Networking* may be confusing if we talk about e.g., Bluetooth connection 
+but if we re-think in case of at least two connected devices we may say 
+they form a network even if it contains only two devices.
+
+- **Event**s are intentions that may be triggered and dispatched.
+
+- **Event Holder** is an object that can store the String value of an event 
+and it is a kind of *Service Data*. It aims to exchange event type between 
+components. E.g., Event-A is triggered and during the process something went 
+wrong hence an error response should be return and some message shown to the 
+user. But how to change the triggered event to another one? The semantic 
+of this object is the answer for the question. *Event Holder* can be placed 
+into the list of *Service Data* and dispatched if needed.
+
+- **Service Data** is what can be attached to events and passed between 
+Services even if it must be marshalled and de-marshalled if IPC is used.
+
+- **Util**s are components by which some sort of reusable functionality 
+can be achieved.
 
 ### Milestones
 
 Here is a list about the goals to achieve.
 
+- [x] Create a public GitHub repo with the existing structure.
+
 - [ ] Create a stable AIDL-based Storage-Network communication library.
 
 - [ ] Introduce unit tests for existing functionalities.
 
-- [ ] Fixture and mock data handling option for DEBUG, TEST versions.
+- [ ] Fixtures or mock data possibility for *debug* and *test* versions.
 
 - [ ] Improve security.
 
 - [ ] Improve functionality with a Android HaMeR framework as a choice in 
-service connection in order to support loosely coupled class hierarchy that 
+service connection establishment and communication in order to support 
+loosely coupled class hierarchy that 
 enables developers to implement more flexible and optimised solutions.
 
 - [ ] Include libraries for RESTful frameworks *(e.g., Retrofit)* to be able to 
 implement more coherent and clean solutions
 
-- [ ] Improve networking functionalities with Bluetooth, Wifi-Direct, NFC, ... 
+- [ ] Improve networking functionalities with Bluetooth, Wifi-Direct, NFC, etc. 
 connection capabilities.
+
+- [ ] Providing documentation togethet with usecase, component, sequence, 
+activity and class diagrams to demonstrate how components work together to 
+give a coherent solution.
 
 ### Project Management
 
@@ -96,6 +155,8 @@ import com.backend.services.datamodels.UserModel;
 public class ExampleActivity extends Activity {
 	
 	private IServiceConnection mStorageServiceConnection = new StorageServiceConnection();
+  
+  private IServiceEventListener mExampleEventListener;
 
     private UserModel mUser;
 	
@@ -106,7 +167,8 @@ public class ExampleActivity extends Activity {
 
         // Do things
 
-        mStorageServiceConnection.attachEventListener(new ExampleEventListener());
+        mExampleEventListener = new ExampleEventListener();
+        mStorageServiceConnection.attachEventListener(mExampleEventListener);
     }
     
     @Override
@@ -117,6 +179,7 @@ public class ExampleActivity extends Activity {
     
     @Override
     public void onDestroy() {
+      mStorageServiceConnection.detachEventListener(mExampleEventListener);
     	disconnectService();
     	super.onDestroy();
     }
